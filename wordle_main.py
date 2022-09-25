@@ -1,8 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import random
+import requests
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(950, 1300)
         MainWindow.setStyleSheet("font: 20pt \"Arial\";\n"
@@ -318,13 +321,30 @@ QPushButton:hover {
         self.fourth_arrow.setText(_translate("MainWindow", "<html><head/><body><p align=\"right\"><br/></p></body></html>"))
         self.fifth_arrow.setText(_translate("MainWindow", "<html><head/><body><p align=\"right\"><br/></p></body></html>"))
 
-
         self.pushButton.clicked.connect(self.input_submitted)
         self.hint.clicked.connect(self.reveal)
 
         # ----------------------------------------------------
         self.count = 0
-        self.word = 'apple'
+        self.word = self.get_words()
+
+
+    def get_words(self):
+        word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
+
+        response = requests.get(word_site)
+        word = response.content.splitlines()
+
+        random_num = random.randint(0, 10000)
+
+        word_list = str(word[random_num].decode())
+
+        while len(word_list) != 5:
+            random_num = random.randint(0, 10000)
+            word_list = str(word[random_num].decode())
+
+        return word_list
+
 
     def input_submitted(self):
 
@@ -335,7 +355,7 @@ QPushButton:hover {
         else:
             self.label.setText(f'You typed: {self.input_word.capitalize()}')
 
-
+            print(self.count)
             if self.count == 0:
                 self.first_arrow.setText('➤')
                 self.first_arrow.setStyleSheet("color: rgb(102,178,255);")
@@ -346,6 +366,7 @@ QPushButton:hover {
                     self.place_color_first()
 
                 self.count += 1
+                self.correct_answer()
 
 
             elif self.count == 1:
@@ -360,6 +381,7 @@ QPushButton:hover {
                     self.place_color_second()
 
                 self.count += 1
+                self.correct_answer()
 
             elif self.count == 2:
 
@@ -371,7 +393,9 @@ QPushButton:hover {
                 for i in range(len(self.input_word)):
                     self.index = i
                     self.place_color_third()
+
                 self.count += 1
+                self.correct_answer()
 
             elif self.count == 3:
                 self.fourth_arrow.setText('➤')
@@ -382,7 +406,9 @@ QPushButton:hover {
                 for i in range(len(self.input_word)):
                     self.index = i
                     self.place_color_fourth()
+
                 self.count += 1
+                self.correct_answer()
 
             elif self.count == 4:
                 self.fifth_arrow.setText('➤')
@@ -393,7 +419,10 @@ QPushButton:hover {
                 for i in range(len(self.input_word)):
                     self.index = i
                     self.place_color_fifth()
+
                 self.count += 1
+                self.correct_answer()
+                self.tries_over()
 
 
     def place_color_first(self):
@@ -761,6 +790,37 @@ QPushButton:hover {
 
     def reveal(self):
         self.answer.setText(f'The word is {self.word}')
+
+
+    def correct_answer(self):
+        if self.input_word == self.word:
+            msg = QtWidgets.QMessageBox()
+
+            msg.setIcon(msg.Information)
+            msg.setWindowTitle("Congratulation")
+            msg.setText("Good Job, You got it Right ")
+
+            x = msg.exec_()
+            self.reboot()
+
+    def tries_over(self):
+        if self.input_word != self.word:
+            msg = QtWidgets.QMessageBox()
+
+            msg.setIcon(msg.Information)
+            msg.setWindowTitle("You are out of tries")
+            msg.setText(f"ehh out of luck \nCorrect word: {self.word}")
+
+            x = msg.exec_()
+            self.reboot()
+
+    def reboot(self):
+        Ui_MainWindow.setupUi(self,MainWindow)
+        self.count = 0
+
+
+
+
 
 if __name__ == "__main__":
     import sys
