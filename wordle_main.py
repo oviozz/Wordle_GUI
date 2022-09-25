@@ -8,7 +8,7 @@ class Ui_MainWindow(object):
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(950, 1300)
-        MainWindow.setStyleSheet("font: 20pt \"Arial\";\n"
+        MainWindow.setStyleSheet("background-color: #f1f2f6 ; font: 20pt \"Arial\";\n"
 "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -118,7 +118,7 @@ QPushButton:hover {
         self.pushButton.setFlat(False)
         self.pushButton.setObjectName("pushButton")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(160, 190, 441, 61))
+        self.label.setGeometry(QtCore.QRect(160, 190, 441, 41))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(15)
@@ -128,7 +128,7 @@ QPushButton:hover {
         self.label.setFont(font)
         self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.label.setStyleSheet("font: 15pt \"MS Shell Dlg 2\";\n"
-"color: rgb(248, 120,    120);")
+"color: rgb(248, 120, 120);")
         self.label.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
@@ -187,7 +187,7 @@ QPushButton:hover {
         font.setItalic(False)
         font.setWeight(50)
         self.hint.setFont(font)
-        self.hint.setStyleSheet("font: 10pt \"MS Shell Dlg 2\";")
+        self.hint.setStyleSheet("background-color: white; font: 10pt \"MS Shell Dlg 2\";")
         self.hint.setObjectName("hint")
         self.answer = QtWidgets.QLabel(self.centralwidget)
         self.answer.setGeometry(QtCore.QRect(10, 30, 141, 21))
@@ -202,7 +202,7 @@ QPushButton:hover {
         self.answer.setText("")
         self.answer.setObjectName("answer")
         self.first_arrow = QtWidgets.QLabel(self.centralwidget)
-        self.first_arrow.setGeometry(QtCore.QRect(20, 270, 61, 101))
+        self.first_arrow.setGeometry(QtCore.QRect(20, 270, 51, 101))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(20)
@@ -215,7 +215,7 @@ QPushButton:hover {
         self.first_arrow.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.first_arrow.setObjectName("first_arrow")
         self.second_arrow = QtWidgets.QLabel(self.centralwidget)
-        self.second_arrow.setGeometry(QtCore.QRect(20, 430, 61, 101))
+        self.second_arrow.setGeometry(QtCore.QRect(20, 430, 51, 101))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(20)
@@ -228,7 +228,7 @@ QPushButton:hover {
         self.second_arrow.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.second_arrow.setObjectName("second_arrow")
         self.third_arrow = QtWidgets.QLabel(self.centralwidget)
-        self.third_arrow.setGeometry(QtCore.QRect(20, 570, 61, 101))
+        self.third_arrow.setGeometry(QtCore.QRect(20, 570, 51, 101))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(20)
@@ -241,7 +241,7 @@ QPushButton:hover {
         self.third_arrow.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.third_arrow.setObjectName("third_arrow")
         self.fourth_arrow = QtWidgets.QLabel(self.centralwidget)
-        self.fourth_arrow.setGeometry(QtCore.QRect(20, 740, 61, 101))
+        self.fourth_arrow.setGeometry(QtCore.QRect(20, 740, 51, 101))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(20)
@@ -254,7 +254,7 @@ QPushButton:hover {
         self.fourth_arrow.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.fourth_arrow.setObjectName("fourth_arrow")
         self.fifth_arrow = QtWidgets.QLabel(self.centralwidget)
-        self.fifth_arrow.setGeometry(QtCore.QRect(20, 890, 61, 101))
+        self.fifth_arrow.setGeometry(QtCore.QRect(20, 890, 51, 101))
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(20)
@@ -328,7 +328,6 @@ QPushButton:hover {
         self.count = 0
         self.word = self.get_words()
 
-
     def get_words(self):
         word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
 
@@ -355,7 +354,6 @@ QPushButton:hover {
         else:
             self.label.setText(f'You typed: {self.input_word.capitalize()}')
 
-            print(self.count)
             if self.count == 0:
                 self.first_arrow.setText('➤')
                 self.first_arrow.setStyleSheet("color: rgb(102,178,255);")
@@ -367,6 +365,7 @@ QPushButton:hover {
 
                 self.count += 1
                 self.correct_answer()
+                self.lineEdit.setText('')
 
 
             elif self.count == 1:
@@ -382,6 +381,7 @@ QPushButton:hover {
 
                 self.count += 1
                 self.correct_answer()
+                self.lineEdit.setText('')
 
             elif self.count == 2:
 
@@ -394,8 +394,10 @@ QPushButton:hover {
                     self.index = i
                     self.place_color_third()
 
+
                 self.count += 1
                 self.correct_answer()
+                self.lineEdit.setText('')
 
             elif self.count == 3:
                 self.fourth_arrow.setText('➤')
@@ -409,6 +411,7 @@ QPushButton:hover {
 
                 self.count += 1
                 self.correct_answer()
+                self.lineEdit.setText('')
 
             elif self.count == 4:
                 self.fifth_arrow.setText('➤')
@@ -423,6 +426,7 @@ QPushButton:hover {
                 self.count += 1
                 self.tries_over()
                 self.correct_answer()
+                self.lineEdit.setText('')
 
 
 
