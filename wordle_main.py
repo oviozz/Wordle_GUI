@@ -324,6 +324,7 @@ QPushButton:hover {
         self.pushButton.clicked.connect(self.input_submitted)
         self.hint.clicked.connect(self.reveal)
 
+
         # ----------------------------------------------------
         self.count = 0
         self.word = self.get_words()
